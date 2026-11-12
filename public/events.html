@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сервіс управління подіями</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 640px;
+      margin: 40px auto;
+      padding: 0 16px;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+    h1 {
+        font-size: 42px;
+        color: #dc2626;
+        margin-bottom: 20px;
+    }
+    .card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    input, select, button {
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+    }
+    button {
+      background-color: #2563eb;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+    }
+    #searchInput {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="pageTitle">Сервіс управління подіями</h1>
+
+  <div class="card">
+    <form id="eventForm">
+      <input id="eventTitle" type="text" placeholder="Назва події" required />
+      <select id="eventCategory">
+        <option value="WORKSHOP">Workshop</option>
+        <option value="MEETUP">Meetup</option>
+        <option value="SEMINAR">Seminar</option>
+      </select>
+      <button id="addEventBtn" type="submit">Додати нову подію</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <input id="searchInput" type="text" placeholder="Пошук події за назвою..." />
+    <ul id="eventsList">
+      <li>[WORKSHOP] Node.js Meetup</li>
+      <li>[SEMINAR] ІТ Конференція</li>
+    </ul>
+  </div>
+
+  <script>
+    const form = document.getElementById('eventForm');
+    const titleInput = document.getElementById('eventTitle');
+    const categorySelect = document.getElementById('eventCategory');
+    const eventsList = document.getElementById('eventsList');
+    const searchInput = document.getElementById('searchInput');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const li = document.createElement('li');
+      li.textContent = `[${categorySelect.value}] ${titleInput.value.trim()}`;
+      eventsList.appendChild(li);
+      titleInput.value = '';
+    });
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      Array.from(eventsList.children).forEach((item) => {
+        item.style.display = item.textContent.toLowerCase().includes(query) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
